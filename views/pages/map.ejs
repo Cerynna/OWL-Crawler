@@ -1,0 +1,29 @@
+<% include header %>
+
+<div class="container">
+
+
+    
+    <h1>OWL Project - Game <%= idGame %> - Map <%= idMap %></h1>
+    <%= map.away.id %>
+    <%= map.score %>
+    <%= map.home.id %>
+    <ul>
+    <% for(var i=0; i<map.away.roster.length; i++) {%>
+    <li>
+    <%= map.away.roster[i] %>
+    </li>
+    <% } %>
+    </ul>
+    <ul>
+    <% for(var i=0; i<map.home.roster.length; i++) {%>
+    <li>
+    <%= map.home.roster[i] %>
+    </li>
+    <% } %>
+    </ul>
+    
+
+
+</div>
+<% include footer %>
