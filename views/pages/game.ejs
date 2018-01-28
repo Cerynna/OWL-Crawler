@@ -1,0 +1,10 @@
+<% include header %>
+        <% for(var i=0; i<maps.length; i++) {%>
+            <li>
+        
+               <a href='/game/<%= game %>/map/<%= maps[i] %>'> <%= maps[i] %></a>
+            </li>
+            <% } %>
+    </ul>
+
+    <% include footer %>

@@ -1,137 +1,81 @@
-const casper = require('casper').create();
-const url = 'https://overwatchleague.com/fr-fr';
-const fs = require('fs');
-const utils = require('utils');
 
-function progressBar(action, max) {
-    var pourcent = Math.round((action * 100) / max, 0);
-    var txt = "";
-    for (i = 1; i <= 100; i++) {
-        if (i <= pourcent) {
-            txt = txt + "⬤";
-        }
-        else {
-            txt = txt + "○";
-        }
+let express = require('express');
+let fs = require('fs');
 
-
-    }
-
-    return txt + " " + pourcent + "%";
-}
+let app = express();
 
 
 
-casper.start(url);
+app.set('view engine', 'ejs');
 
-casper.on("page.error", function (msg, trace) {
-    this.echo("Error: " + msg, "ERROR");
-});
-casper.echo("Recupération de la listes des matches - Wait 10 sec");
-casper.thenOpen(url + "/schedule", function () {
+app.use(express.static('public'));
+app.get('/', (request, response) => {
 
-    this.wait(5000, function () {
-        var js = this.evaluate(function () {
+    var ListMatch = require('./ListMatch.json');
 
-            var arrMatches = [];
-            var steps = document.querySelectorAll('.Tabs--rectangular a');
-            for (var s = 0; s < steps.length; s++) {
-                steps[s].click();
-                var weeks = document.querySelectorAll('.Tabs--darkBackground a');
-                for (w = 0; w < weeks.length; w++) {
-                    weeks[w].click();
-                    var matches = document.querySelectorAll('.MatchRow-contentWrapper');
-                    for (var o = 0; o < matches.length; o++) {
-                        arrMatches.push(matches[o].getAttribute('href'));
+    var arrMatch = [];
 
-                    }
+    ListMatch.forEach(Match => {
+
+        idGame = Match.split("/").pop();
+        var main = require('./matchs/' + idGame + '/main.json');
+        if (main.maps.length > 0) {
+            var arrMap = [];
+            main.maps.forEach(Map => {
+
+                var maps = require('./matchs/' + idGame + '/' + Map + '.json');
+                var scrores = maps.score.split("-");
+
+                var array = {
+                    'scoreA': scrores[0],
+                    'scoreB': scrores[1],
+                    'away': maps.away,
+                    'home': maps.home,
                 }
-            }
-            return JSON.stringify(arrMatches)
-        });
-        var myfile = "ListMatch.json";
-        fs.write(myfile, js, 'w');
-    })
-});
-casper.wait(10000, function () {
-    var links = JSON.parse(fs.read("ListMatch.json"));
-    var nbMatchs = links.length
-    var maxTime = ((nbMatchs) * 9) / 60;
-    var nMatch = 1;
-    this.echo("Recuperation des Maps -  ~" + maxTime +" min");
-    casper.eachThen(links, function (response) {
-        var urlMatches = url + response.data;
-        var id = response.data.split("/").pop();
-        this.echo(progressBar(nMatch, nbMatchs));
-        this.thenOpen(urlMatches, function () {
-            this.wait(9000, function () {
-                var js = this.evaluate(function () {
-                    var maps = document.querySelectorAll('.Tabs--rectangular a');
-                    var arrMaps = [];
-                    for (var m = 0; m < maps.length; m++) {
-                        arrMaps.push(maps[m].getAttribute('href').split("/").pop());
-                    }
-                    var array = {
-                        'id': arrMaps.shift(),
-                        'maps': arrMaps
-                    }
-                    return JSON.stringify(array)
-                })
-                var myfile = "matchs/" + id + "/main.json";
-                fs.write(myfile, js, 'w');
+
+                arrMap.push(array);
+
+            })
+
+            arrMatch.push({
+                'id': idGame,
+                'maps': arrMap
             });
 
-        })
-        nMatch++;
+
+
+        }
     });
-    casper.eachThen(links, function (response) {
-        var id = response.data.split("/").pop();
-        var game = JSON.parse(fs.read("matchs/" + id + "/main.json"));
 
-        this.echo("Recuperation des informations pour les Maps du match  : " + id + " - Wait 40 sec");
-        casper.eachThen(game.maps, function (map) {
-            var urlMaps = url + "/match/" + game.id + "/game/" + map.data;
-            var idMap = map.data;
-            this.echo("Recuperation des informations pour la Map  : " + idMap + " - Wait 8 sec");
-            this.thenOpen(urlMaps, function () {
+    response.render('pages/index', { matchs: arrMatch })
 
-                this.wait(8000, function () {
-                    var js = this.evaluate(function () {
-
-                        var score = document.querySelector('.GameResult .MatchStatus').textContent;
-                        var teams = document.querySelectorAll('.GameResult .TeamScore-name .hidden-sm');
-                        var rostersA = document.querySelectorAll('.GameRoster-awayRoster h4');
-                        var rostersB = document.querySelectorAll('.GameRoster-homeRoster h4');
-                        var teamA = teams[0].textContent;
-                        var TeamB = teams[1].textContent;
-                        arrRosterA = [];
-                        arrRosterB = [];
-                        rostersA.forEach(function (membre) {
-                            arrRosterA.push(membre.textContent);
-
-                        });
-                        rostersB.forEach(function (membre) {
-                            arrRosterB.push(membre.textContent);
-                        });
-                        var array = {
-                            'score': score,
-                            'away': {
-                                'id': teamA,
-                                'roster': arrRosterA
-                            },
-                            'home': {
-                                'id': TeamB,
-                                'roster': arrRosterB
-                            }
-                        }
-                        return JSON.stringify(array)
-                    });
-                    var myfile = "matchs/" + id + "/" + idMap + ".json";
-                    fs.write(myfile, js, 'w');
-                });
-                this.echo(this.getCurrentUrl());
-            });
-        });
-    });
 })
-casper.run();
+app.get('/game/:idGame', function (request, response) {
+    var idGame = request.params.idGame;
+    var Match = require('./matchs/' + idGame + '/main.json');
+
+    response.render('pages/game', {
+        maps: Match.maps,
+        game: Match.id
+    })
+
+
+
+})
+
+app.get('/game/:idGame/map/:idMap', function (request, response) {
+    var idMap = request.params.idMap;
+    var idGame = request.params.idGame;
+    var Map = require('./matchs/' + idGame + '/' + idMap + '.json');
+
+    response.render('pages/map', {
+        map: Map,
+        idGame: idGame,
+        idMap: idMap
+    })
+
+
+
+})
+
+app.listen(8080)
