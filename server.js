@@ -3,6 +3,23 @@ const url = 'https://overwatchleague.com/fr-fr';
 const fs = require('fs');
 const utils = require('utils');
 
+function progressBar(action, max) {
+    var pourcent = Math.round((action * 100) / max, 0);
+    var txt = "";
+    for (i = 1; i <= 100; i++) {
+        if (i <= pourcent) {
+            txt = txt + "⬤";
+        }
+        else {
+            txt = txt + "○";
+        }
+
+
+    }
+
+    return txt + " " + pourcent + "%";
+}
+
 
 
 casper.start(url);
@@ -26,7 +43,7 @@ casper.thenOpen(url + "/schedule", function () {
                     var matches = document.querySelectorAll('.MatchRow-contentWrapper');
                     for (var o = 0; o < matches.length; o++) {
                         arrMatches.push(matches[o].getAttribute('href'));
-                    
+
                     }
                 }
             }
@@ -37,16 +54,17 @@ casper.thenOpen(url + "/schedule", function () {
     })
 });
 casper.wait(10000, function () {
-    var links = JSON.parse(fs.read("FakeListMatch.json"));
+    var links = JSON.parse(fs.read("ListMatch.json"));
     var nbMatchs = links.length
-    var maxTime = ((nbMatchs) * 10) / 60;
+    var maxTime = ((nbMatchs) * 9) / 60;
     var nMatch = 1;
+    this.echo("Recuperation des Maps -  ~" + maxTime +" min");
     casper.eachThen(links, function (response) {
         var urlMatches = url + response.data;
         var id = response.data.split("/").pop();
-        this.echo("Recuperation des Maps pour le Match : " + id + " - Wait 8 sec - Temp estimé : " + maxTime + " min - " + nMatch + "/" + nbMatchs);
+        this.echo(progressBar(nMatch, nbMatchs));
         this.thenOpen(urlMatches, function () {
-            this.wait(8000, function () {
+            this.wait(9000, function () {
                 var js = this.evaluate(function () {
                     var maps = document.querySelectorAll('.Tabs--rectangular a');
                     var arrMaps = [];
