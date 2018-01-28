@@ -129,7 +129,7 @@ casper.wait(10000, function () {
                     var myfile = "matchs/" + id + "/" + idMap + ".json";
                     fs.write(myfile, js, 'w');
                 });
-                this.echo(this.getCurrentUrl());
+            
             });
         });
     });
