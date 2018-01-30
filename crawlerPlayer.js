@@ -8,36 +8,87 @@ casper.on("page.error", function (msg, trace) {
     this.echo("Error: " + msg, "ERROR");
 });
 
-casper.echo("Recupération de la listes des Joueur");
+casper.echo("Recupération de la listes des Joueurs");
+
+// casper.then(function () {
+
+//         var pages = this.evaluate(function () {
+//             return document.querySelectorAll('.pagination li').textContent;
+//         })
+
+//         for (var page in pages) { 
+//             console.log(page);
+//         }
+
+//         // pages.forEach(function (page) {
+//         //     // if (page.textContent.length < 2) {
+//         //     //     casper.thenClick(".pagination li", function () {
+//         //     //         this.wait(500, function () {
+//         //     //             console.log("LOL")
+//         //     //         })
+//         //     //     })
+//         //     // }
+//         // });
+// });
+
+casper.evaluate(function() {
+    var pages = document.querySelectorAll('.pagination li');
+    console.log(pages);
+});
+
 
 casper.then(function () {
     var js = this.evaluate(function () {
         var pages = document.querySelectorAll('.pagination li');
-        arrPlayers = [];
+        arrPlayers = {};
         pages.forEach(function (page) {
-            if (page.textContent.length < 2) {
-                page.click();
+            //if (page.textContent.length < 2) {
+                var next = document.querySelector('.pagination li.next');
+                next.click();
                 var players = document.querySelectorAll('tr');
                 players.forEach(function (player) {
                     var infos = player.querySelectorAll('td')
+                    var arrJoueur = {};
                     if (infos.length > 1) {
                         var pseudo = infos[0].textContent
-                        arrJoueur = [
-                            pseudo,
-                             {
-                                'pseudo': infos[0].textContent,
-                                'fristName': infos[1].textContent,
-                                'lastName': infos[2].textContent,
-                                'country': infos[3].textContent,
-                                'team': infos[4].textContent.slice(-3),
-                                'role': infos[5].textContent
-                            }
-                        ];
-                        arrPlayers.push(arrJoueur)
+
+                        var role = infos[5].textContent;
+                        var idRole = 0;
+                        switch (role) {
+                            case 'Soutien':
+                                idRole = 1;
+                                break;
+                            case 'Polyvalent':
+                                idRole = 2;
+                                break;
+                            case 'Tank':
+                                idRole = 3;
+                                break;
+                            case 'Attaque':
+                                idRole = 4;
+                                break;
+                            default:
+                                idRole = 0;
+
+                        }
+                        arrJoueur[pseudo] = {
+                            'pseudo': infos[0].textContent,
+                            'firstName': infos[1].textContent,
+                            'lastName': infos[2].textContent,
+                            'country': infos[3].textContent,
+                            'idTeam': infos[4].textContent.slice(-3),
+                            'team': infos[4].textContent.slice(0, -4),
+                            'role': infos[5].textContent,
+                            'idRole': idRole
+                        };
+
+                        Object.assign(arrPlayers, arrJoueur);
+                        //arrPlayers.merge(arrJoueur)
                     }
 
                 });
-            }
+
+            //};
         });
         return JSON.stringify(arrPlayers)
     });
