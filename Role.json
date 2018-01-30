@@ -1,0 +1,22 @@
+{
+    "0": {
+        "name": "Error",
+        "icon": "<i class='ra ra-sword ra-1x'></i>"
+    },
+    "1": {
+        "name": "Soutien",
+        "icon": "<i class='ra ra-health ra-1x'></i>"
+    },
+    "2": {
+        "name": "Polyvalent",
+        "icon": "<i class='ra ra-snowflake ra-1x'></i>"
+    },
+    "3": {
+        "name": "Tank",
+        "icon": "<i class='ra ra-shield ra-1x'></i>"
+    },
+    "4": {
+        "name": "Attaque",
+        "icon": "<i class='ra ra-sword ra-1x'></i>"
+    }
+}

@@ -1,0 +1,33 @@
+<% include header %>
+<div class="container">
+    <table id="playerTable" class="table table-striped sortable">
+        <tr>
+            <thead>
+                <th>Pseudo</th>
+                <th>Prenom</th>
+                <th>Nom</th>
+                <th>Country</th>
+                <th>idTeam</th>
+                <th>Team</th>
+                <th>Role</th>
+                <th>idRole</th>
+            </thead>
+        </tr>
+        <tbody> 
+        <% for (var player in players) { %>
+            <tr>
+                <td><a href="/player/<%= players[player].pseudo %>"><%= players[player].pseudo %></a> </td>
+                <td><%= players[player].firstName %> </td>
+                <td><%= players[player].lastName %> </td>
+                <td><%= players[player].country %> </td>
+                <td><%= players[player].idTeam %> </td>
+                <td><%= players[player].team %> </td>
+                <td><%= players[player].role %> </td>
+                <td><%- Role[players[player].idRole].icon %> </td>
+            </tr>
+        <% } %>
+        </tbody> 
+    </table>
+</div>
+
+<% include footer %>

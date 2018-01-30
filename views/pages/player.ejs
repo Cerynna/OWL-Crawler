@@ -1,0 +1,14 @@
+<% include header %>
+<div class="container">
+<h4><%= player.pseudo %></h4>
+firstName : <%= player.firstName %><br />
+lastName : <%= player.lastName %><br />
+country : <%= player.country %><br />
+team : <%= player.team %><br />
+idTeam : <%= player.idTeam %><br />
+role : <%= player.role %><br />
+Match : <%= player.Match() %><br />
+nbMatch : <%= player.nbMatch() %><br />
+<%- Role[player.idRole].icon %><br />
+</div>
+<% include footer %>

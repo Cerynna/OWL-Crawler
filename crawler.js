@@ -13,14 +13,9 @@ function progressBar(action, max) {
         else {
             txt = txt + "○";
         }
-
-
     }
-
     return txt + " " + pourcent + "%";
 }
-
-
 
 casper.start(url);
 
