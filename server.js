@@ -1,89 +1,42 @@
+var express = require('express');
+var bodyParser = require('body-parser');
+var multer = require('multer'); // v1.0.5
+var upload = multer(); // for parsing multipart/form-data
+var session = require('express-session')
+var flash = require('express-flash');
 
-let express = require('express');
-let fs = require('fs');
-var Player = require('./Player.js');
-var Role = require('./Role.json');
+var app = express();
 
+let sessionOptions = {
+	secret: "secretkey",
+	cookie: {
+		maxAge: 269999999999
+	},
+	saveUninitialized: true,
+	resave: true
+};
 
-let app = express();
+if (app.get('env') === 'production') {
+	app.set('trust proxy', 1);
+	sessionOptions.cookie.secure = true;
+}
+else {
+	sessionOptions.cookie.secure = false;
+}
 
-
+app.use(session(sessionOptions));
 
 app.set('view engine', 'ejs');
-
 app.use(express.static('public'));
-app.get('/', (request, response) => {
-    var ListMatch = require('./ListMatch.json');
-    var arrMatch = [];
-    ListMatch.forEach(Match => {
-        idGame = Match.split("/").pop();
-        var main = require('./matchs/' + idGame + '/main.json');
-        if (main.maps.length > 0) {
-            var arrMap = [];
-            main.maps.forEach(Map => {
-                var maps = require('./matchs/' + idGame + '/' + Map + '.json');
-                var scrores = maps.score.split("-");
-                var array = {
-                    'scoreA': scrores[0],
-                    'scoreB': scrores[1],
-                    'away': maps.away,
-                    'home': maps.home,
-                }
-                arrMap.push(array);
-            })
-            arrMatch.push({
-                'id': idGame,
-                'maps': arrMap
-            });
-        }
-    });
-
-    response.render('pages/index', {
-        'matchs': arrMatch
-    })
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(flash());
+app.use(function (req, res, next) {
+	res.locals.user = req.session.user;
+	res.locals.login = req.session.login;
+	res.locals.form = req.session.form;
+	next();
 })
-app.get('/game/:idGame', function (request, response) {
-    var idGame = request.params.idGame;
-    var Match = require('./matchs/' + idGame + '/main.json');
-    response.render('pages/game', {
-        'maps': Match.maps,
-        'game': Match.id
-    })
-})
-
-app.get('/game/:idGame/map/:idMap', function (request, response) {
-    var idMap = request.params.idMap;
-    var idGame = request.params.idGame;
-    var Map = require('./matchs/' + idGame + '/' + idMap + '.json');
-
-    response.render('pages/map', {
-        'map': Map,
-        'idGame': idGame,
-        'idMap': idMap
-    })
-})
-
-app.get('/players', function (request, response) {
-
-    var players = require('./ListPlayers.json');
-    response.render('pages/players', {
-        'players': players, 
-        'Role': Role
-    })
-})
-app.get('/player/:namePlayer', function (request, response) {
-    var namePlayer = request.params.namePlayer;
-    var ListMatch = require('./ListMatch.json');
-    var player = new Player(namePlayer)
-
-console.log(player);
-
-    response.render('pages/player', {
-        'player': player,
-        'Role': Role
-
-    })
-})
-
+require('./routes.js')(app);
 
 app.listen(8085)

@@ -1,0 +1,135 @@
+/*
+node-sass --watch public/sass/main.scss public/css/main.css
+*/
+@import "ohi_font.css";
+
+$color1: #FCBD49;
+$color2: #FAA02E;
+$color3: #584F4A;
+$color4: #2F2526;
+$color5: #060606;
+
+@font-face {
+  font-family: OWfont;
+  src: url(/font/big_noodle_titling.ttf);
+}
+
+body {
+  background: url("/img/back.jpg");
+  background-size: cover;
+  color: ligthen($color5, 10%);
+  font-size: 1em;
+}
+a{
+  color: $color1;
+  text-decoration: none;
+  &:hover{
+    color: $color2;
+  }
+}
+
+nav{
+  margin: 10px 0 !important;
+  padding: 0 10%!important;
+  a{
+    color: $color1;
+  }
+  ul {
+    border-radius: 5px;
+    padding: 0 10px ;
+  }
+  .nav-item{
+    background: lighten($color5, 10%);
+    transform: skew(20deg);
+    padding: 10px 20px;
+    font-size: 1.2em;
+    margin-left: 0px;
+    border-radius: 5px;
+    border-right: 10px solid $color1;
+    font-family: OWfont, serif; 
+font-style: italic;
+    .dropdown-menu{
+      transform: skew(-20deg);
+    }
+    &:hover{
+      background: $color1;
+      border-right: 10px solid darken($color1, 20%) !important;
+      a{
+        color: $color5;
+      }
+    }
+    &.active{
+      background: $color1;
+      border-right: 10px solid darken($color1, 20%) !important;
+      a{
+        color: $color5;
+      }
+    }
+    a{
+      text-transform: capitalize;
+      transform: skew(-20deg);
+    }
+  }
+}
+
+.container {
+
+  background: rgba(255, 255, 255, 0.8);
+  padding: 50px 20px;
+  margin-top: 100px;
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px black;
+  h1 {
+    font-family: OWfont, serif;
+    font-size: 3em;
+    color: $color1;
+    text-shadow: 1px 1px $color4;
+    font-style: italic;
+  }
+  table {
+    background: #FFF;
+    color: #000;
+    .ra-diamond {
+      color: rgb(21, 160, 241);
+    }
+  }
+  form{
+    label{
+      color: lighten($color5, 10%);
+      text-transform: uppercase;
+      padding-left: 20px; 
+      font-family: OWfont, serif; 
+      font-size: 1.5em;
+      text-shadow: 1px 1px $color1;
+      font-style: italic;
+    }
+    button{
+      &.btn-submit{
+        background:lighten($color5, 10%);
+        border: none;
+        padding: 5px;
+        width: 100%;
+        border-radius: 5px;
+        color: $color1;
+        border-right: 10px solid $color1 !important;
+        text-transform: uppercase;
+        font-family: OWfont, serif; 
+        font-size: 1.5em;
+        &:hover {
+          background:$color1;
+          color: lighten($color5, 10%);
+          border-right: 10px solid darken($color1, 10%) !important;
+        }
+      }
+    }
+  }
+}
+
+.victory {
+  background: rgba(7, 85, 7, 0.432);
+}
+
+.defeat {
+  background: rgba(85, 7, 7, 0.432);
+}
+  

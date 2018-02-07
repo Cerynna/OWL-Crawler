@@ -1,0 +1,100 @@
+/*
+node-sass --watch public/sass/main.scss public/css/main.css
+*/
+@import url(ohi_font.css);
+@font-face {
+  font-family: OWfont;
+  src: url(/font/big_noodle_titling.ttf); }
+
+body {
+  background: url("/img/back.jpg");
+  background-size: cover;
+  color: ligthen(#060606, 10%);
+  font-size: 1em; }
+
+a {
+  color: #FCBD49;
+  text-decoration: none; }
+  a:hover {
+    color: #FAA02E; }
+
+nav {
+  margin: 10px 0 !important;
+  padding: 0 10% !important; }
+  nav a {
+    color: #FCBD49; }
+  nav ul {
+    border-radius: 5px;
+    padding: 0 10px; }
+  nav .nav-item {
+    background: #202020;
+    transform: skew(20deg);
+    padding: 10px 20px;
+    font-size: 1.2em;
+    margin-left: 0px;
+    border-radius: 5px;
+    border-right: 10px solid #FCBD49;
+    font-family: OWfont, serif;
+    font-style: italic; }
+    nav .nav-item .dropdown-menu {
+      transform: skew(-20deg); }
+    nav .nav-item:hover {
+      background: #FCBD49;
+      border-right: 10px solid #db8f04 !important; }
+      nav .nav-item:hover a {
+        color: #060606; }
+    nav .nav-item.active {
+      background: #FCBD49;
+      border-right: 10px solid #db8f04 !important; }
+      nav .nav-item.active a {
+        color: #060606; }
+    nav .nav-item a {
+      text-transform: capitalize;
+      transform: skew(-20deg); }
+
+.container {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 50px 20px;
+  margin-top: 100px;
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px black; }
+  .container h1 {
+    font-family: OWfont, serif;
+    font-size: 3em;
+    color: #FCBD49;
+    text-shadow: 1px 1px #2F2526;
+    font-style: italic; }
+  .container table {
+    background: #FFF;
+    color: #000; }
+    .container table .ra-diamond {
+      color: #15a0f1; }
+  .container form label {
+    color: #202020;
+    text-transform: uppercase;
+    padding-left: 20px;
+    font-family: OWfont, serif;
+    font-size: 1.5em;
+    text-shadow: 1px 1px #FCBD49;
+    font-style: italic; }
+  .container form button.btn-submit {
+    background: #202020;
+    border: none;
+    padding: 5px;
+    width: 100%;
+    border-radius: 5px;
+    color: #FCBD49;
+    border-right: 10px solid #FCBD49 !important;
+    text-transform: uppercase;
+    font-family: OWfont, serif;
+    font-size: 1.5em; }
+    .container form button.btn-submit:hover {
+      background: #FCBD49;
+      color: #202020;
+      border-right: 10px solid #fbab17 !important; }
+
+.victory {
+  background: rgba(7, 85, 7, 0.432); }
+
+.defeat {
+  background: rgba(85, 7, 7, 0.432); }

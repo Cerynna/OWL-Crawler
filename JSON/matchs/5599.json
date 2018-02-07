@@ -1,0 +1,25 @@
+{
+    "away": {
+        "id": "SFS",
+        "roster": [
+            "BABYBAY",
+            "dhaK",
+            "sleepy",
+            "Danteh",
+            "Nomy",
+            "Nevix"
+        ]
+    },
+    "home": {
+        "id": "VAL",
+        "roster": [
+            "Envy",
+            "Kariv",
+            "Agilities",
+            "Soon",
+            "Unkoe",
+            "Fate"
+        ]
+    },
+    "score": "2-3"
+}
