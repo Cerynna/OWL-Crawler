@@ -1,33 +1,45 @@
 <% include header %>
 <div class="container">
-    <table id="playerTable" class="table table-striped sortable">
-        <tr>
-            <thead>
-                <th>Pseudo</th>
-                <th>Prenom</th>
-                <th>Nom</th>
-                <th>Country</th>
-                <th>idTeam</th>
-                <th>Team</th>
-                <th>Role</th>
-                <th>idRole</th>
-            </thead>
-        </tr>
-        <tbody> 
-        <% for (var player in players) { %>
-            <tr>
-                <td><a href="/player/<%= players[player].pseudo %>"><%= players[player].pseudo %></a> </td>
-                <td><%= players[player].firstName %> </td>
-                <td><%= players[player].lastName %> </td>
-                <td><%= players[player].country %> </td>
-                <td><%= players[player].idTeam %> </td>
-                <td><%= players[player].team %> </td>
-                <td><%= players[player].role %> </td>
-                <td><%- Role[players[player].idRole].icon %> </td>
-            </tr>
-        <% } %>
-        </tbody> 
-    </table>
+<h1>Liste des Joueurs</h1>
+    <div class="row">
+        <div class="col">
+            <table id="playerTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th>Pseudo</th>
+                    <th>idTeam</th>
+                    <th>Team</th>
+                    <th>Gain</th>
+                    <th>Prix</th>
+                    <th> W</th>
+                    <th> L</th>
+                    <th> D</th>
+                    <th>idRole</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for (var player in players) { %>
+                <% var stat = players[player].Match() %>
+                <tr>
+                    <td><a href="/player/<%= players[player].pseudo %>"><%= players[player].pseudo %></a></td>
+
+                    <td><%= players[player].idTeam %> </td>
+                    <td><%= players[player].team %> </td>
+                    <td><%= stat.wl.gain %> <i class="ra ra-diamond ra-lg"></i></td>
+                    <td><%= stat.wl.prix %> <i class="ra ra-diamond ra-lg"></i></td>
+                    <td><%= stat.wl.victory %> </td>
+                    <td> <%= stat.wl.defeat %> </td
+                    >
+                    <td> <%= stat.wl.draw %>  </td>
+                    <td class="text-center"><%- Role[players[player].idRole].icon %> <span
+                                style="display: none;"> <%- Role[players[player].idRole].id %> </span></td>
+                </tr>
+                <% } %>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
 </div>
 
 <% include footer %>

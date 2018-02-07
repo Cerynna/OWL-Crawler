@@ -1,14 +1,66 @@
 <% include header %>
+<% var maps = player.Match() %>
 <div class="container">
-<h4><%= player.pseudo %></h4>
-firstName : <%= player.firstName %><br />
-lastName : <%= player.lastName %><br />
-country : <%= player.country %><br />
-team : <%= player.team %><br />
-idTeam : <%= player.idTeam %><br />
-role : <%= player.role %><br />
-Match : <%= player.Match() %><br />
-nbMatch : <%= player.nbMatch() %><br />
-<%- Role[player.idRole].icon %><br />
+    <h4><%= player.pseudo %></h4>
+    firstName : <%= player.firstName %><br/>
+    lastName : <%= player.lastName %><br/>
+    country : <%= player.country %><br/>
+    team : <%= player.team %><br/>
+    idTeam : <%= player.idTeam %><br/>
+    role : <%= player.role %><br/>
+    Rank : <%= maps.wl.rank %><br/>
+    nbGameTeam : <%= maps.wl.nbGame %><br/>
+    Pourcent : <%= maps.wl.pourcent %><br/>
+    Win : <%= maps.wl.victory %><br/>
+    Lose : <%= maps.wl.defeat %><br/>
+    Match : <br/>
+
+    <% maps.forEach(function (map){
+        var rosterHome = map.home.roster
+        var rosterAway = map.away.roster
+        var scores = map.score.split("-");
+        var scoreHome = scores[0];
+        var scoreAway = scores[1];
+        var corlorHome = "victory";
+        var colorAway = "defeat";
+        if (scoreAway > scoreHome) {
+            corlorHome = "defeat";
+            colorAway = "victory";
+        }
+    %>
+
+    <div class="card">
+        <div class="row">
+            <div class="col text-center">
+                <h4 class="<%= corlorHome %>"><%= scoreHome %></h4>
+            </div>
+            <div class="col text-center">
+                <h4>-</h4>
+            </div>
+            <div class="col text-center">
+                <h4 class="<%= colorAway %>"><%= scoreAway %></h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <ul>
+                    <% rosterHome.forEach(function(player){ %>
+                    <li><%= player %></li>
+                    <% }) %>
+                </ul>
+            </div>
+            <div class="col">
+                <ul>
+                    <% rosterAway.forEach(function(player){ %>
+                    <li><%= player %></li>
+                    <% }) %>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <% }) %>
+
+    nbMatch : <%= player.nbMatch() %><br/>
+    <%- Role[player.idRole].icon %><br/>
 </div>
 <% include footer %>

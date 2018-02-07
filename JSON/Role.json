@@ -1,0 +1,27 @@
+{
+    "0": {
+        "name": "Error",
+        "icon": "<i class='ra ra-sword ra-2x'></i>",
+        "id": 0
+    },
+    "1": {
+        "name": "Soutien",
+        "icon": "<i class='ra ra-health ra-2x'></i>",
+        "id": 1
+    },
+    "2": {
+        "name": "Polyvalent",
+        "icon": "<i class='ra ra-snowflake ra-2x'></i>",
+        "id": 2
+    },
+    "3": {
+        "name": "Tank",
+        "icon": "<i class='ra ra-shield ra-2x'></i>",
+        "id": 3
+    },
+    "4": {
+        "name": "Attaque",
+        "icon": "<i class='ra ra-sword ra-2x'></i>",
+        "id": 4
+    }
+}

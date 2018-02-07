@@ -1,65 +1,22 @@
 <% include header %>
 
+<div class="container">
+    <h1>Bienvenue
+        <% if(login === true ){ %>
+        <%= user.pseudo %>
+        <% } %>
+        </h1>
+            <i class="ohi-ana"></i>
+            <i class="ohi-dva"></i>
+            <i class="ohi-genji"></i>
+            <i class="ohi-hanzo"></i>
+            <i class="ohi-junkrat"></i>
+            <i class="ohi-lucio"></i>
+            <i class="ohi-mccree"></i>
+            <i class="ohi-mei"></i>
+            <i class="ohi-mercy"></i>
+            <i class="ohi-tracer"></i>
+</div>
 
 
-    <ul class="nav nav-tabs">
-        <% for(var i=0; i<matchs.length; i++) {%>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#<%= matchs[i].id %>" role="button" aria-expanded="false" aria-controls="<%= matchs[i].id %>">
-                    <%= matchs[i].maps[0].away.id %> -
-                        <%= matchs[i].maps[0].home.id %>
-                </a>
-
-            </li>
-            <% } %>
-    </ul>
-    <div class="container-fluid">
-        <% for(var i=0; i<matchs.length; i++) {%>
-
-
-            <div class="collapse" id="<%= matchs[i].id %>">
-                    <h4>
-                            <%= matchs[i].maps[0].away.id %> -
-                                <%= matchs[i].maps[0].home.id %>
-                        </h4>
-                <div class="row">
-                    <% for(var u=0; u<matchs[i].maps.length; u++) {%>
-                        
-                        <div class="col">
-                            <div class="row">
-                                <div class="col text-center">
-                                    <%= matchs[i].maps[u].scoreA %> -
-                                        <%= matchs[i].maps[u].scoreB %>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <ul <%if (matchs[i].maps[u].scoreA> matchs[i].maps[u].scoreB) { %> style="background:green;"
-                                        <% } %> >
-                                            <% for(var p=0; p<matchs[i].maps[u].away.roster.length; p++) {%>
-                                                <li>
-                                                    <%= matchs[i].maps[u].away.roster[p] %>
-                                                </li>
-                                                <% } %>
-                                    </ul>
-                                </div>
-                                <div class="col">
-                                    <ul <%if (matchs[i].maps[u].scoreB> matchs[i].maps[u].scoreA) { %> style="background:green;"
-                                        <% } %> >
-                                            <% for(var p=0; p<matchs[i].maps[u].home.roster.length; p++) {%>
-                                                <li>
-                                                    <%= matchs[i].maps[u].home.roster[p] %>
-                                                </li>
-                                                <% } %>
-                                    </ul>
-                                </div>
-                            </div>
-
-                        </div>
-                        <% } %>
-
-                </div>
-            </div>
-            <% } %>
-    </div>
-    <% include footer %>
+<% include footer %>
