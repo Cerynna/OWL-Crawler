@@ -8,7 +8,8 @@
     "crawler": "casperjs crawler/crawler.js",
     "crawlerPlayer": "casperjs crawler/crawlerPlayer.js",
     "crawlerMatch": "casperjs crawler/crawlerMatch.js",
-    "crawlerMaps": "casperjs crawler/crawlerMaps.js"
+    "crawlerMaps": "casperjs crawler/crawlerMaps.js",
+    "crawlerWeak": "casperjs crawler/crawlerMatchWeak.js"
   },
   "author": "",
   "license": "ISC",
@@ -19,7 +20,10 @@
     "connect-flash": "^0.1.1",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
+    "express-async-handler": "^1.0.3",
     "express-flash": "git://github.com/RGBboy/express-flash.git",
+    "express-promise": "^0.4.0",
+    "express-promise-router": "^3.0.1",
     "express-session": "^1.15.6",
     "file-exists": "^5.0.1",
     "firebase": "^4.9.0",

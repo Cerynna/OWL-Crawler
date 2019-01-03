@@ -1,0 +1,120 @@
+<% include header %>
+
+<div class="container">
+    <h1>Roster</h1>
+    <h2>Etape : <%= step.step %> Semaine : <%= step.week %></h2>
+    <form action="/roster" method="post">
+        <input type="text" name="step" value="<%= step.step %>-<%= step.week %>" class="hidden"/>
+        <div class="row">
+            <div class="col">
+                <label for="roster">Selectionne ton Equipe</label>
+            </div>
+        </div>
+        <div id="finderRoster" class="row kard">
+            <div class="col">
+                <select id="roster" name="roster" multiple size="6">
+                    <option value="Pseudo" class="player"
+                            title="###,Gain,Prix" disabled> Pseudo
+                    </option>
+                    <% for (var player in players) { %>
+                    <% var stat = players[player].Match() %>
+                    <option value="<%= players[player].pseudo %>" class="player"
+                            title="<%= players[player].idTeam %>,<%= stat.wl.gain %>,<%= stat.wl.prix %>"
+                            <% if(players[player].pseudo in roster){ %>
+                            selected
+                            <% } %>
+                    > <%= players[player].pseudo %> </option>
+                    <% } %>
+                </select>
+            </div>
+            <div class="col-1">
+                <div id="clearSimulate" class="btn"><i class="ra ra-cycle ra-lg"></i></div>
+            </div>
+        </div>
+        <h2>My Team</h2>
+
+
+        <div class="row">
+            <div class="col">
+                <div id="myTeam">
+                    <div class="row header">
+                        <div class="col-8 text-left ">
+                        <% if (roster.step != step.step + '-' + step.week){ %>
+                        Ceci est un ancien roster crée le <%= roster.update %>
+                <% } %>
+                        </div>
+                        <div class="col-2 text-center ">
+                            Gain
+                        </div>
+                        <div class="col-2 text-center ">
+                            Prix
+                        </div>
+                    </div>
+
+                    <%
+                    var totalGain = 0;
+                    var totalPrix = 0;
+                    if (typeof roster === 'object'){
+                            for (var myRoster in roster) {
+                    if (myRoster !== "update" && myRoster !== "status" && myRoster !== "step") {
+                        totalGain = totalGain + roster[myRoster].gain;
+                        totalPrix = totalPrix + roster[myRoster].prix;
+                        var img = '<img sytle="display: inline-block;" src="/img/' + roster[myRoster].team + '.svg" class="logo-team mini" />';
+                    %>
+                    <div class="row player">
+                        <div class="col-1">
+                            <%- img %>
+                        </div>
+                        <div class="col-7 text-left playerName">
+                            <%= myRoster %>
+                        </div>
+                        <div class="col-2 text-center">
+                            <%= roster[myRoster].gain %>&nbsp;<i class="ra ra-diamond ra-lg"></i>
+                        </div>
+                        <div class="col-2 text-center">
+                            <%= roster[myRoster].prix %>&nbsp;<i class="ra ra-diamond ra-lg"></i>
+                        </div>
+                    </div>
+
+                    <% }
+                    }
+                    %>
+
+                    <% } else { %>
+                    <div class="row player">
+                        <div class="col text-center">
+                            <%= roster %>
+                        </div>
+                    </div>
+                    <% } %>
+
+                    <div class="row footer">
+                        <div class="col-1">
+                        </div>
+                        <div class="col-7 text-right">
+                            Total :
+                        </div>
+
+                        <div class="col-2 text-center">
+                            <%= totalGain %>&nbsp;<i class="ra ra-diamond ra-lg"></i>
+                        </div>
+
+                        <div class="col-2 text-center">
+                            <%= totalPrix %>&nbsp;<i class="ra ra-diamond ra-lg"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row margin-top">
+            <div class="col text-center">
+                <button class="btn-submit" type="submit">Valider my Team</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+<% include footer %>

@@ -1,82 +1,10 @@
-[
-    {
-        "attributes": {
-            "analytics": "[object Object]",
-            "class": "Tabs-tab Tabs-tab--active",
-            "href": "/fr-fr/match/10223"
-        },
-        "height": 46,
-        "html": "Présentation",
-        "nodeName": "a",
-        "tag": "<a class=\"Tabs-tab Tabs-tab--active\" analytics=\"[object Object]\" href=\"/fr-fr/match/10223\">Présentation</a>",
-        "text": "Présentation",
-        "visible": true,
-        "width": 142.109375,
-        "x": 21,
-        "y": 348
-    },
-    {
-        "attributes": {
-            "analytics": "[object Object]",
-            "class": "Tabs-tab",
-            "href": "/fr-fr/match/10223/game/5599"
-        },
-        "height": 46,
-        "html": "Dorado",
-        "nodeName": "a",
-        "tag": "<a class=\"Tabs-tab\" analytics=\"[object Object]\" href=\"/fr-fr/match/10223/game/5599\">Dorado</a>",
-        "text": "Dorado",
-        "visible": true,
-        "width": 95.34375,
-        "x": 173.109375,
-        "y": 348
-    },
-    {
-        "attributes": {
-            "analytics": "[object Object]",
-            "class": "Tabs-tab",
-            "href": "/fr-fr/match/10223/game/5600"
-        },
-        "height": 46,
-        "html": "Temple d’Anubis",
-        "nodeName": "a",
-        "tag": "<a class=\"Tabs-tab\" analytics=\"[object Object]\" href=\"/fr-fr/match/10223/game/5600\">Temple d’Anubis</a>",
-        "text": "Temple d’Anubis",
-        "visible": true,
-        "width": 158.90625,
-        "x": 278.453125,
-        "y": 348
-    },
-    {
-        "attributes": {
-            "analytics": "[object Object]",
-            "class": "Tabs-tab",
-            "href": "/fr-fr/match/10223/game/5601"
-        },
-        "height": 46,
-        "html": "Ilios",
-        "nodeName": "a",
-        "tag": "<a class=\"Tabs-tab\" analytics=\"[object Object]\" href=\"/fr-fr/match/10223/game/5601\">Ilios</a>",
-        "text": "Ilios",
-        "visible": true,
-        "width": 73.421875,
-        "x": 447.359375,
-        "y": 348
-    },
-    {
-        "attributes": {
-            "analytics": "[object Object]",
-            "class": "Tabs-tab",
-            "href": "/fr-fr/match/10223/game/5602"
-        },
-        "height": 46,
-        "html": "Numbani",
-        "nodeName": "a",
-        "tag": "<a class=\"Tabs-tab\" analytics=\"[object Object]\" href=\"/fr-fr/match/10223/game/5602\">Numbani</a>",
-        "text": "Numbani",
-        "visible": true,
-        "width": 103.0625,
-        "x": 530.78125,
-        "y": 348
+{
+    "users": {
+        "admin": {
+            "pseudo": "admin",
+            "email": "cerynna@gmail.com",
+            "mdp": "",
+            "gold": 9999
+        }
     }
-]
+}

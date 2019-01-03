@@ -1,17 +1,165 @@
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.16/cr-1.4.1/fc-3.2.4/datatables.min.js"></script>
+<script type="text/javascript"
+        src="https://cdn.datatables.net/v/bs4/dt-1.10.16/cr-1.4.1/fc-3.2.4/datatables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
 <script>
-$(document).ready(function() {
-    $('#playerTable').DataTable({
-        colReorder: true,
+    $(document).ready(function () {
+        $('#playerTable').DataTable({
+            colReorder: true,
+        });
+
+
+        $("#roster").select2({
+            templateResult: formatOptions,
+            theme: "flat"
+        });
+
+
+        function formatOptions(state) {
+            if (!state.id) {
+                return state.text;
+            }
+            var option = state.title.split(",")
+            var img = "";
+            if (option[0] !== "###") {
+                img = '<img sytle="display: inline-block;" src="/img/' + option[0] + '.svg" class="logo-team mini" />';
+            }
+
+            var $state = $(
+                '<div class="row dropdownRoster">' +
+                '<div class="col-1">' +
+                img +
+                '</div>' +
+
+                '<div class="col text-left playerName">' +
+                state.text +
+                '</div>' +
+
+                '<div class="col-2 text-left">' +
+                option[1] + '&nbsp;<i class="ra ra-diamond ra-lg"></i>' +
+                '</div>' +
+                '<div class="col-2 text-left">' +
+                option[2] + '&nbsp;<i class="ra ra-diamond ra-lg"></i>' +
+                '</div>' +
+
+                '</div>'
+            );
+            return $state;
+        }
+
+        $("#roster").change(function () {
+            if ($(this).find("option:selected").length >= 6) {
+                $(".select2-dropdown").addClass('hidden');
+
+            }
+            if($(this).find("option:selected").length < 6){
+                $(".select2-dropdown").removeClass('hidden');
+            }
+
+            var prixTotal = 0;
+            var gainTotal = 0;
+            var player = "";
+            $(this).find("option:selected").each(function (index, item) {
+                var info = $(item).attr("title").split(",");
+                var img = '<img sytle="display: inline-block;" src="/img/' + info[0] + '.svg" class="logo-team mini" />';
+                player = player + '<div class="row player">' +
+                    '<div class="col-1">' +
+                    img +
+                    '</div>' +
+
+                    '<div class="col-7 text-left playerName">' +
+                    $(item).val() +
+                    '</div>' +
+
+                    '<div class="col-2 text-center">' +
+                    info[1] + '&nbsp;<i class="ra ra-diamond ra-lg"></i>' +
+                    '</div>' +
+
+                    '<div class="col-2 text-center">' +
+                    info[2] + '&nbsp;<i class="ra ra-diamond ra-lg"></i>' +
+                    '</div>' +
+                    '</div>';
+                gainTotal = gainTotal + parseInt(info[1]);
+                prixTotal = prixTotal + parseInt(info[2]);
+    
+            });
+            if(player === ""){
+                player = player + '<div class="row player">'+
+                '<div class="col text-center">'+
+                    'Selection des joueurs '+
+                '</div>'+
+            '</div>';
+            }
+
+            var header = '<div class="row header">' +
+                '<div class="col-8 text-right playerName">' +
+                '</div>' +
+
+                '<div class="col-2 text-center">' +
+                'Gain' +
+                '</div>' +
+
+                '<div class="col-2 text-center">' +
+                'Prix' +
+                '</div>' +
+                '</div>';
+            var total = '<div class="row footer">' +
+                '<div class="col-1">' +
+                '</div>' +
+
+                '<div class="col-7 text-right">' +
+                'Total : ' +
+                '</div>' +
+
+                '<div class="col-2 text-center">' +
+                gainTotal + '&nbsp;<i class="ra ra-diamond ra-lg"></i>' +
+                '</div>' +
+
+                '<div class="col-2 text-center">' +
+                prixTotal + '&nbsp;<i class="ra ra-diamond ra-lg"></i>' +
+                '</div>' +
+                '</div>';
+
+            arr = header + player + total;
+            $('#myTeam').html(arr)
+
+        });
+        $('#clearSimulate').click(function () {
+            $('#roster').val(null).trigger('change');
+            $(".select2-dropdown").removeClass('hidden');
+        })
+
+        /*var arr = new Array();
+        $("#roster").change(function() {
+            if ($(this).find("option:selected").length > 7) {
+                $(this).find("option").removeAttr("selected");
+                $(this).val(arr);
+            }
+            else if ($(this).find("option:selected").length == 6){
+                $(this).find("option").attr("disable");
+            }
+            else {
+                arr = new Array();
+                $(this).find("option:selected").each(function(index, item) {
+                    arr.push($(item).val());
+                });
+                
+            }
+        });*/
+
     });
-} );
+
+
 </script>
 
 

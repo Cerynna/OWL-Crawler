@@ -3,6 +3,7 @@ node-sass --watch public/sass/main.scss public/css/main.css
 */
 @import "ohi_font.css";
 
+
 $color1: #FCBD49;
 $color2: #FAA02E;
 $color3: #584F4A;
@@ -19,26 +20,49 @@ body {
   background-size: cover;
   color: ligthen($color5, 10%);
   font-size: 1em;
+  .ra-diamond {
+    color: rgb(21, 160, 241);
+  }
 }
-a{
+.hidden{
+  display: none;
+}
+.logo-team {
+  &.mini {
+    width: 2em;
+  }
+}
+
+.dropdownRoster {
+  margin: 0 20px 0 5px !important;
+}
+
+.playerName {
+  font-family: OWfont, serif;
+  font-size: 1.2em;
+  color: lighten($color5, 10%);
+  font-style: italic;
+}
+
+a {
   color: $color1;
   text-decoration: none;
-  &:hover{
+  &:hover {
     color: $color2;
   }
 }
 
-nav{
+nav {
   margin: 10px 0 !important;
-  padding: 0 10%!important;
-  a{
+  padding: 0 10% !important;
+  a {
     color: $color1;
   }
   ul {
     border-radius: 5px;
-    padding: 0 10px ;
+    padding: 0 10px;
   }
-  .nav-item{
+  .nav-item {
     background: lighten($color5, 10%);
     transform: skew(20deg);
     padding: 10px 20px;
@@ -46,26 +70,29 @@ nav{
     margin-left: 0px;
     border-radius: 5px;
     border-right: 10px solid $color1;
-    font-family: OWfont, serif; 
-font-style: italic;
-    .dropdown-menu{
+    font-family: OWfont, serif;
+    font-style: italic;
+    .dropdown-menu {
       transform: skew(-20deg);
+      .dropdown-item {
+        transform: skew(0deg);
+      }
     }
-    &:hover{
+    &:hover {
       background: $color1;
       border-right: 10px solid darken($color1, 20%) !important;
-      a{
+      a {
         color: $color5;
       }
     }
-    &.active{
+    &.active {
       background: $color1;
       border-right: 10px solid darken($color1, 20%) !important;
-      a{
+      a {
         color: $color5;
       }
     }
-    a{
+    a {
       text-transform: capitalize;
       transform: skew(-20deg);
     }
@@ -79,44 +106,126 @@ font-style: italic;
   margin-top: 100px;
   border-radius: 5px;
   box-shadow: 5px 5px 5px black;
+  .kard{
+    background: lighten($color5, 10%);
+    padding: 20px;
+    margin:  0;
+    border-radius: 10px;
+  }
   h1 {
     font-family: OWfont, serif;
     font-size: 3em;
-    color: $color1;
     text-shadow: 1px 1px $color4;
+    font-style: italic;
+    color: $color1;
+  }
+  h2 {
+    color: lighten($color5, 10%);
+    text-transform: uppercase;
+    padding-left: 20px;
+    font-family: OWfont, serif;
+    font-size: 1.5em;
+    text-shadow: 1px 1px $color1;
     font-style: italic;
   }
   table {
     background: #FFF;
     color: #000;
-    .ra-diamond {
-      color: rgb(21, 160, 241);
+
+  }
+  .row{
+    &.margin-top{
+      margin-top: 20px !important;
     }
   }
-  form{
-    label{
+  #myTeam {
+    border-radius: 10px;
+    background: lighten($color5, 10%);
+    .row {
+      &:first-child {
+        border-radius: 10px 10px 0 0;
+      }
+      &:last-child {
+        border-radius: 0 0 10px 10px;
+      }
+      padding: 10px;
+      color: #FFF;
+      border-radius: 10px;
+      .playerName {
+        color: #000;
+      }
+      &.header {
+        font-family: OWfont, serif;
+        font-size: 1.2em;
+        text-shadow: 1px 1px $color4;
+        font-style: italic;
+        color: #FFF;
+      }
+      &.footer {
+        font-family: OWfont, serif;
+        font-size: 1.2em;
+        text-shadow: 1px 1px $color4;
+        font-style: italic;
+        color: #FFF;
+      }
+      &.player {
+        margin: 1px 20px;
+        &:nth-child(2n+2) {
+          background: rgba(255, 255, 255, 0.9);
+        }
+        border-radius: 0;
+        background: rgba(255, 255, 255, 0.7);
+        margin-bottom: 0;
+        color: lighten($color5, 10%);
+      }
+    }
+  }
+  .btn {
+    background: lighten($color5, 10%);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    color: $color1;
+    text-transform: uppercase;
+    font-family: OWfont, serif;
+    font-size: 20px;
+    height: 50px;
+    width: 50px;
+    &:hover {
+      background: $color1;
+      color: lighten($color5, 10%);
+
+    }
+  }
+  form {
+    label {
       color: lighten($color5, 10%);
       text-transform: uppercase;
-      padding-left: 20px; 
-      font-family: OWfont, serif; 
+      padding-left: 20px;
+      font-family: OWfont, serif;
       font-size: 1.5em;
       text-shadow: 1px 1px $color1;
       font-style: italic;
     }
-    button{
-      &.btn-submit{
-        background:lighten($color5, 10%);
+    select {
+      width: 100%;
+    }
+    button {
+      &.btn-submit {
+        background: lighten($color5, 10%);
         border: none;
         padding: 5px;
-        width: 100%;
+        width: 90%;
+        height: 50px;
         border-radius: 5px;
         color: $color1;
         border-right: 10px solid $color1 !important;
         text-transform: uppercase;
-        font-family: OWfont, serif; 
+        font-family: OWfont, serif;
         font-size: 1.5em;
+        margin: 0 5%;
         &:hover {
-          background:$color1;
+          background: $color1;
           color: lighten($color5, 10%);
           border-right: 10px solid darken($color1, 10%) !important;
         }
@@ -132,4 +241,4 @@ font-style: italic;
 .defeat {
   background: rgba(85, 7, 7, 0.432);
 }
-  
+@import "partials/select2";

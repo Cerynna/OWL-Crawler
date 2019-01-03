@@ -7,10 +7,11 @@
                 <thead>
                 <tr>
                     <th>Pseudo</th>
-                    <th>idTeam</th>
                     <th>Team</th>
                     <th>Gain</th>
                     <th>Prix</th>
+                    <th>%</th>
+                    <th>lol</th>
                     <th> W</th>
                     <th> L</th>
                     <th> D</th>
@@ -22,17 +23,17 @@
                 <% var stat = players[player].Match() %>
                 <tr>
                     <td><a href="/player/<%= players[player].pseudo %>"><%= players[player].pseudo %></a></td>
-
-                    <td><%= players[player].idTeam %> </td>
-                    <td><%= players[player].team %> </td>
+                    <td> <img src="/img/<%= players[player].idTeam %>.svg" class="logo-team mini"/>  <%= players[player].team %> </td>
                     <td><%= stat.wl.gain %> <i class="ra ra-diamond ra-lg"></i></td>
                     <td><%= stat.wl.prix %> <i class="ra ra-diamond ra-lg"></i></td>
+                    <td><%= Math.round(((stat.wl.gain - stat.wl.prix) * 100 )/ stat.wl.gain)  %>%</td>
+                    <td><%= Math.round(stat.wl.gain - stat.wl.prix)  %><i class="ra ra-diamond ra-lg"></i></td>
                     <td><%= stat.wl.victory %> </td>
                     <td> <%= stat.wl.defeat %> </td
                     >
                     <td> <%= stat.wl.draw %>  </td>
-                    <td class="text-center"><%- Role[players[player].idRole].icon %> <span
-                                style="display: none;"> <%- Role[players[player].idRole].id %> </span></td>
+                    <td class="text-center"><%- players[player].idRole.icon %> <span
+                                style="display: none;"> <%- players[player].idRole.id %> </span></td>
                 </tr>
                 <% } %>
                 </tbody>

@@ -18,9 +18,10 @@ links.forEach(function (link) {
     if (!fs.exists(mapJASON)) {
         casper.thenOpen(url + link, function () {
 
-            this.echo("Game : " + game + " Maps : " + map + " - Wait 8 Sec");
+            this.echo("Game : " + game + " Maps : " + map + " - Wait 10 Sec");
             this.wait(10000, function () {
                 var CrawlMap = this.evaluate(function () {
+                    // var gameId  = casper.getCurrentUrl();
                     var arrMaps = [];
                     var score = document.querySelector('.GameResult .MatchStatus').textContent;
                     var teams = document.querySelectorAll('.GameResult .TeamScore-name .hidden-sm');
@@ -51,6 +52,7 @@ links.forEach(function (link) {
                     return array;
                 });
                 //Object.assign(arrPlayers, CrawlMap);
+                CrawlMap["game"] = game;
                 this.echo(JSON.stringify(CrawlMap));
                 var myfile = "./JSON/matchs/" + map + ".json";
                 fs.write(myfile, JSON.stringify(CrawlMap), 'w');
